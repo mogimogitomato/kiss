@@ -11,7 +11,40 @@
         {{ end }}
       </div>
       <h2 class="subtitle is-6">{{ .Date.Format "January 2, 2006" }}</h2>
-      <h1 class="title"><a href="{{ .Permalink }}">{{ .Title }}</a>{{ if .Draft }} ::Draft{{ end }}</h1>
+      <!-- {{ $tax := .Section }} -->
+      <!-- {{ $taxCount := len $tax }} -->
+      <h1 class="title">
+        <a href="{{ .Permalink }}">{{ .Title }}
+        {{ $title := urlize .Title }}
+        {{ if eq .Section "tags"}}
+            {{ if lt 0 (len .Site.Taxonomies.tags) }}
+                {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+                {{ $term := urlize $name }}
+                    {{ if eq $term $title }}
+                        ({{ $taxonomy.Count }})
+                    {{ end }}
+                {{ end }}
+            {{ end }}
+        {{ else if eq .Section "categories"}}
+            {{ if lt 0 (len .Site.Taxonomies.categories) }}
+                {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
+                {{ $term := urlize $name }}
+                    {{ if eq $term $title }}
+                        ({{ $taxonomy.Count }})
+                    {{ end }}
+                {{ end }}
+            {{ end }}
+        {{ else if eq .Section "archives"}}
+            {{ if lt 0 (len .Site.Taxonomies.archives) }}
+                {{ range $name, $taxonomy := .Site.Taxonomies.archives }}
+                {{ $term := urlize $name }}
+                    {{ if eq $term $title }}
+                        ({{ $taxonomy.Count }})
+                    {{ end }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+        </a>{{ if .Draft }} ::Draft{{ end }}</h1>
       <div class="content">
         {{ .Summary | plainify | safeHTML }}
         {{ if .Truncated }}
