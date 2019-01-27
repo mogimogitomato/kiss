@@ -11,8 +11,6 @@
         {{ end }}
       </div>
       <h2 class="subtitle is-6">{{ .Date.Format "January 2, 2006" }}</h2>
-      <!-- {{ $tax := .Section }} -->
-      <!-- {{ $taxCount := len $tax }} -->
       <h1 class="title">
         <a href="{{ .Permalink }}">{{ .Title }}
         {{ $title := urlize .Title }}
