@@ -6,6 +6,11 @@
     {{ end }}
   </div>
 </section>
+<script>
+   if('serviceWorker' in navigator) {
+     navigator.serviceWorker.register('/sw.js')
+   }
+ </script>
 {{ if .Site.Params.matomoAnalytics }}
 {{- partial "analytics/matomo" . -}}
 {{ end }}
